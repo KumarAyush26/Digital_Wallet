@@ -6,7 +6,7 @@ const { generateWalletAccountNo, generateUpiId } = require('../utils/idGenerator
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET || 'super_secret_jwt_key_digital_wallet_production_2026', {
-    expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+    expiresIn: process.env.JWT_EXPIRES_IN || process.env.JWT_EXPIRES || '7d'
   });
 };
 
