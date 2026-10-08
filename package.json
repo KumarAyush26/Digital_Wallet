@@ -1,0 +1,29 @@
+{
+  "name": "digital-wallet-mern",
+  "version": "1.0.0",
+  "description": "Production-ready Digital Wallet System built with MERN Stack (MongoDB, Express, React, Node.js)",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
+    "start": "node server/server.js",
+    "server": "cd server && npm start",
+    "server:dev": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "client:build": "cd client && npm run build",
+    "seed": "cd server && npm run seed",
+    "test:api": "cd server && node test-api.js"
+  },
+  "keywords": [
+    "digital-wallet",
+    "mern",
+    "upi",
+    "qr-payments",
+    "fintech",
+    "fraud-detection",
+    "ai-insights"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

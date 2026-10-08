@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply transition-colors duration-200 text-slate-900 dark:text-white;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    background-color: #f8fafc;
+  }
+
+  .dark body {
+    background-color: #0b0f19;
+  }
+}
+
+/* ─── Custom Modern Scrollbars ─── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 dark:bg-slate-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-300 dark:bg-slate-600;
+}
+
+/* ─── Glassmorphic Card System ─── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  @apply rounded-2xl border border-white/60 shadow-sm;
+}
+
+.dark .glass-card {
+  background: rgba(15, 23, 42, 0.85);
+  @apply border-slate-800/60;
+}
+
+.glass-dropdown {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(24px);
+  @apply rounded-xl border border-slate-200 shadow-2xl;
+}
+
+.dark .glass-dropdown {
+  background: rgba(15, 23, 42, 0.97);
+  @apply border-slate-800;
+}
+
+/* ─── Fintech Credit Card Gradients ─── */
+.gradient-card-primary {
+  background: linear-gradient(135deg, #4f46e5 0%, #312e81 50%, #1e1b4b 100%);
+}
+
+.gradient-card-emerald {
+  background: linear-gradient(135deg, #059669 0%, #065f46 100%);
+}
+
+.gradient-card-dark {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+.gradient-card-gold {
+  background: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+}
+
+/* ─── Glow Effects ─── */
+.glow-badge-emerald {
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.35);
+}
+
+.glow-badge-rose {
+  box-shadow: 0 0 14px rgba(244, 63, 94, 0.35);
+}
+
+.glow-badge-brand {
+  box-shadow: 0 0 14px rgba(99, 102, 241, 0.35);
+}
+
+/* ─── Custom Animations ─── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Skeleton Loading Shimmer ─── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(226, 232, 240, 0.8) 0%,
+    rgba(241, 245, 249, 1) 50%,
+    rgba(226, 232, 240, 0.8) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 1.5s linear infinite;
+  @apply rounded-xl;
+}
+
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(30, 41, 59, 0.8) 0%,
+    rgba(51, 65, 85, 1) 50%,
+    rgba(30, 41, 59, 0.8) 100%
+  );
+  background-size: 200% auto;
+}
+
+/* ─── Focus Ring Override ─── */
+*:focus-visible {
+  @apply outline-none ring-2 ring-brand-500 ring-offset-1;
+}
+
+/* ─── Input number remove arrows ─── */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* ─── Selection Color ─── */
+::selection {
+  @apply bg-brand-500/30 text-brand-900;
+}
