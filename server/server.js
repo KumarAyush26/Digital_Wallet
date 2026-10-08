@@ -84,25 +84,32 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-// Connect Database & Start Server
 (async () => {
   try {
     await connectDB();
 
     // Auto seed demo data if no users exist
     const userCount = await User.countDocuments();
+
     if (userCount === 0) {
       console.log('⚡ Empty database detected. Auto-seeding demo users and transactions...');
       await seedDatabase();
     }
 
-    server.listen(PORT, () => {
-      console.log(`🚀 Digital Wallet Backend Server running on port ${PORT} [${process.env.NODE_ENV || 'development'}]`);
-      console.log(`🌐 Health check endpoint: http://localhost:${PORT}/api/health`);
-    });
+    // Start server only when running locally
+    if (process.env.NODE_ENV !== 'production') {
+      server.listen(PORT, () => {
+        console.log(
+          `🚀 Digital Wallet Backend Server running on port ${PORT}`
+        );
+        console.log(
+          `🌐 Health check endpoint: http://localhost:${PORT}/api/health`
+        );
+      });
+    }
   } catch (err) {
     console.error('Fatal Server Startup Error:', err);
   }
 })();
 
-module.exports = { app, server };
+module.exports = app;

@@ -19,7 +19,9 @@ export const SocketProvider = ({ children }) => {
       return;
     }
 
-    const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+    // In production (Vercel), connect to same origin; locally use env var or localhost
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || 
+      (import.meta.env.PROD ? window.location.origin : 'http://localhost:5000');
     const newSocket = io(socketUrl, {
       transports: ['websocket', 'polling']
     });
