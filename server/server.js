@@ -67,6 +67,17 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Ensure DB is connected for serverless invocations
+app.use('/api', async (req, res, next) => {
+  if (req.path === '/health') return next();
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Mount routes
 app.use('/api/auth', authRoutes);
 app.use('/api/wallet', walletRoutes);
@@ -84,20 +95,19 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-(async () => {
-  try {
-    await connectDB();
+if (process.env.NODE_ENV !== 'production') {
+  (async () => {
+    try {
+      await connectDB();
 
-    // Auto seed demo data if no users exist
-    const userCount = await User.countDocuments();
+      // Auto seed demo data if no users exist
+      const userCount = await User.countDocuments();
 
-    if (userCount === 0) {
-      console.log('⚡ Empty database detected. Auto-seeding demo users and transactions...');
-      await seedDatabase();
-    }
+      if (userCount === 0) {
+        console.log('⚡ Empty database detected. Auto-seeding demo users and transactions...');
+        await seedDatabase();
+      }
 
-    // Start server only when running locally
-    if (process.env.NODE_ENV !== 'production') {
       server.listen(PORT, () => {
         console.log(
           `🚀 Digital Wallet Backend Server running on port ${PORT}`
@@ -106,10 +116,10 @@ const PORT = process.env.PORT || 5000;
           `🌐 Health check endpoint: http://localhost:${PORT}/api/health`
         );
       });
+    } catch (err) {
+      console.error('Fatal Server Startup Error:', err);
     }
-  } catch (err) {
-    console.error('Fatal Server Startup Error:', err);
-  }
-})();
+  })();
+}
 
 module.exports = app;
